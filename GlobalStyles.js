@@ -1,7 +1,7 @@
 /* fonts */
 export const FontFamily = {
-    encodeSansSemiExpandedRegular: "EncodeSansSemiExpanded-Regular",
     encodeSansSemiExpandedSemiBold: "EncodeSansSemiExpanded-SemiBold",
+    encodeSansSemiExpandedSBold: "EncodeSansSemiExpanded-Bold",
   };
   /* font sizes */
   export const FontSize = {
@@ -10,7 +10,7 @@ export const FontFamily = {
   };
   /* Colors */
   export const Color = {
-    colorBlack: "#000",
+    colorBlack: "#2C2C2C",
     colorWhite: "#fff",
   };
   /* Paddings */
