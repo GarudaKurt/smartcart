@@ -3,6 +3,7 @@ import { Text, StyleSheet, View, Pressable, Dimensions, Alert, Modal, TextInput,
 import { FontFamily, Color, Padding } from "../GlobalStyles";
 import { Card, Title, Paragraph } from "react-native-paper";
 import { BarCodeScanner } from 'expo-barcode-scanner';
+<<<<<<< HEAD
 
 const { width } = Dimensions.get("window");
 
@@ -30,6 +31,97 @@ export const Admin = () => {
   const [price, setPrice] = useState('');
   const [events, setEvents] = useState([]); // State variable for storing events
 
+=======
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+import { db } from './firebaseConfig';
+import { collection, query, where, getDocs, updateDoc, addDoc } from 'firebase/firestore';
+
+const { width } = Dimensions.get("window");
+
+const EventCard = ({ event, onUpdateQuantity }) => {
+  const handleIncrease = async () => {
+    const updatedQuantity = event.quantity + 1;
+    try {
+      // Update Firestore
+      await updateQuantity(event.barcode, updatedQuantity);
+      // Update UI state after Firestore update succeeds
+      onUpdateQuantity({ ...event, quantity: updatedQuantity });
+    } catch (error) {
+      Alert.alert("Error updating!", error.message);
+    }
+  };
+
+  const handleDecrease = async () => {
+    const updatedQuantity = event.quantity - 1;
+    try {
+      // Update Firestore
+      await updateQuantity(event.barcode, updatedQuantity);
+      // Update UI state after Firestore update succeeds
+      onUpdateQuantity({ ...event, quantity: updatedQuantity });
+    } catch (error) {
+      Alert.alert("Error updating!", error.message);
+    }
+  };
+
+  const updateQuantity = async (barcode, newQuantity) => {
+    try {
+      const inventoryRef = collection(db, "inventory");
+      const querySnapshot = await getDocs(query(inventoryRef, where("barcode", "==", barcode)));
+      if (!querySnapshot.empty) {
+        // If barcode exists in the inventory collection, update its quantity
+        const docRef = querySnapshot.docs[0].ref;
+        await updateDoc(docRef, { quantity: newQuantity });
+      } else {
+        // Barcode does not exist in the inventory collection
+        console.log("Barcode does not exist in the inventory");
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  return (
+    <View style={[styles.cardContainer, styles.cardAd]}>
+      <Card>
+        <Card.Content>
+          <Paragraph>Barcode: {event.barcode}</Paragraph>
+          <Paragraph>Name: {event.name}</Paragraph>
+          <View style={styles.qtyContainer}>
+            <Paragraph>Qty: {event.quantity}</Paragraph>
+            <View style={styles.buttonContainer}>
+              <Pressable style={styles.btnInc} onPress={handleIncrease}>
+                <Text style={styles.buttonText}> + </Text>
+              </Pressable> 
+              <Pressable style={styles.btnDec} onPress={handleDecrease}>
+                <Text style={styles.buttonText}> - </Text>
+              </Pressable>
+            </View>
+          </View>
+          <Paragraph>Price: {event.price}</Paragraph>
+        </Card.Content>
+      </Card>
+    </View>
+  );
+};
+
+const Admin = ({navigation}) => {
+  const [hasPermission, setHasPermission] = useState(null);
+  const [scanned, setScanned] = useState(false);
+  const [scannedData, setScannedData] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('')
+  const [modalVisible, setModalVisible] = useState(false)
+  const [barcode, setBarcode] = useState('');
+  const [name, setName] = useState('');
+  const [quantity, setQuantity] = useState(0);
+  const [price, setPrice] = useState(0);
+  const [events, setEvents] = useState([]);
+
+  const logout = () =>{
+    navigation.replace('Login')
+  }
+>>>>>>> version6.1
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -39,7 +131,10 @@ export const Admin = () => {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScannedData({ type, data }); // Store scanned data
+<<<<<<< HEAD
     Alert.alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+=======
+>>>>>>> version6.1
     setScanned(false); // Close the camera
     setShowModal(true); // Show the modal for adding product details
   };
@@ -48,6 +143,36 @@ export const Admin = () => {
     setScanned(true); // Toggle scanned status to true to display the barcode scanner
   };
 
+<<<<<<< HEAD
+=======
+  useEffect(() => {
+    if (scannedData && scannedData.data) {
+      setBarcode(scannedData.data);
+    }
+  }, [scannedData]);
+
+  const createData = async () => {
+    if(!barcode || !name || !quantity || !price) {
+      setModalMessage("Please make sure all fields not empty!")
+      setModalVisible(true)
+      return
+    }
+    try {
+      const docRef = await addDoc(collection(db, "inventory"), {
+        barcode: barcode,
+        name: name,
+        quantity: quantity,
+        price: price
+      })
+      setModalMessage("Succesfully created!")
+      setModalVisible(true)
+    } catch(e) {
+      setModalMessage("Error creating data!",e)
+      setModalVisible(true)
+    }
+  }
+
+>>>>>>> version6.1
   const handleSubmit = () => {
     // Create a new event object with the entered data
     const newEvent = {
@@ -56,6 +181,7 @@ export const Admin = () => {
       quantity: quantity,
       price: price,
     };
+<<<<<<< HEAD
 
     // Add the new event to the events array
     setEvents([...events, newEvent]);
@@ -68,6 +194,29 @@ export const Admin = () => {
     setShowModal(false);
   };
 
+=======
+    createData(); // Store to the Firestore DB
+    // Add the new event to the events array
+    setEvents([...events, newEvent]);
+    // Reset the input fields and close the modal
+    setBarcode('');
+    setName('');
+    setQuantity(0);
+    setPrice(0);
+    setShowModal(false);
+  };
+
+  const handleUpdateQuantity = async (index, newEvent) => {
+    try {
+      const updatedEvents = [...events];
+      updatedEvents[index] = newEvent;
+      setEvents(updatedEvents);
+    } catch (error) {
+      console.error("Error updating quantity in UI:", error);
+    }
+  };
+
+>>>>>>> version6.1
   if (hasPermission === null) {
     return <Text>Requesting camera permission...</Text>;
   }
@@ -85,20 +234,34 @@ export const Admin = () => {
       ) : (
         <View style={styles.frame}>
           <View style={styles.signInParent}>
+<<<<<<< HEAD
             <Text style={styles.title}>Inventory</Text>
             <Text>{scannedData ? `Type: ${scannedData.type}, Data: ${scannedData.data}` : 'Scan a barcode'}</Text>
+=======
+           <Icon name="sign-out" size={20} color="black" style={{marginLeft:300}} onPress={logout} />
+            <Text style={styles.title}>Inventory</Text>
+>>>>>>> version6.1
             <Card style={styles.card}>
               <ScrollView contentContainerStyle={styles.scrollContainer} vertical={true}>
                 <Card.Content>
                     <Title>List of products</Title>
                     {events.map((event, index) => (
+<<<<<<< HEAD
                     <EventCard key={index} event={event} />
+=======
+                    <EventCard key={index} event={event} onUpdateQuantity={(newQuantity) => handleUpdateQuantity(index, newQuantity)} />
+>>>>>>> version6.1
                     ))}
                 </Card.Content>
               </ScrollView>
             </Card>
+<<<<<<< HEAD
 
           </View>
+=======
+          </View>
+          
+>>>>>>> version6.1
           <Modal
             animationType="slide"
             transparent={true}
@@ -110,12 +273,18 @@ export const Admin = () => {
                 <TextInput
                   style={styles.input}
                   placeholder="Barcode"
+<<<<<<< HEAD
                   onChangeText={text => setBarcode(scannedData.data)}
+=======
+                  value={barcode}
+                  editable={false}
+>>>>>>> version6.1
                 />
                 <TextInput
                   style={styles.input}
                   placeholder="Name"
                   onChangeText={text => setName(text)}
+<<<<<<< HEAD
                 />
                 <TextInput
                   style={styles.input}
@@ -132,6 +301,30 @@ export const Admin = () => {
             </View>
           </Modal>
           
+=======
+                  value={name ? name : ""}
+                />
+                <TextInput
+                  style={[styles.input, quantity === '' || !/^\d+$/.test(quantity) ? styles.invalidInput : null]}
+                  placeholder="Quantity"
+                  onChangeText={text => setQuantity(text)}
+                  value={quantity ? quantity.toString() : ""}
+                />
+                <TextInput
+                  style={[styles.input, price === '' || !/^\d+$/.test(price) ? styles.invalidInput : null]}
+                  placeholder="Price"
+                  onChangeText={text => setPrice(text)}
+                  value={price ? price.toString() : ""}
+                />
+                <Button title="Submit" onPress={handleSubmit} />
+                <Pressable style={[styles.cancelButton]} onPress={() => setShowModal(false)}>
+                  <Text style={styles.cancelText}>Cancel</Text>
+                </Pressable>
+              </View>
+            </View>
+          </Modal>
+
+>>>>>>> version6.1
           <View style={styles.bottomSection}>
             <Pressable style={styles.submitButton} onPress={handleAddProductPress}>
               <Text style={styles.submitText}>Add Product</Text>
@@ -142,6 +335,10 @@ export const Admin = () => {
     </View>
   );
 }
+<<<<<<< HEAD
+=======
+export default Admin;
+>>>>>>> version6.1
 
 const styles = StyleSheet.create({
   container: {
@@ -181,7 +378,11 @@ const styles = StyleSheet.create({
     borderColor: Color.colorWhite,
     alignItems: "center",
     justifyContent: "center",
+<<<<<<< HEAD
     paddingVertical: Padding.p_7xs,
+=======
+    paddingVertical: 5,
+>>>>>>> version6.1
     marginBottom: 20,
   },
   submitText: {
@@ -218,5 +419,45 @@ const styles = StyleSheet.create({
   },
   cardAd: {
     width: 200, // Set a fixed width for the cards
+<<<<<<< HEAD
+=======
+  },
+  qtyContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    marginLeft: 5, // Adjust the spacing between the Qty paragraph and the buttons as needed
+  },
+  buttonText: {
+    fontSize: 20,
+    fontFamily: "sans-serif",
+  },
+  invalidInput: {
+    borderColor: 'red',
+  },
+  cancelButton: {
+    marginTop: 5,
+    backgroundColor: 'white',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  cancelText: {
+    color: 'black',
+    fontSize: 16,
+  },
+  btnInc: {
+    marginLeft: 70,
+    borderWidth: 1,
+    borderRadius: 3,
+    borderColor: Color.colorBlack
+  },
+  btnDec: {
+    marginLeft: 5,
+    borderWidth: 1,
+    borderRadius: 3,
+    borderColor: Color.colorBlack
+>>>>>>> version6.1
   }
 });

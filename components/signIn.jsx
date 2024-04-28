@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import { Text, StyleSheet, View, TextInput, Pressable, Dimensions } from "react-native";
 import { FontFamily, Color, Border, FontSize, Padding } from "../GlobalStyles";
@@ -5,11 +6,83 @@ import { FontFamily, Color, Border, FontSize, Padding } from "../GlobalStyles";
 const { width } = Dimensions.get("window");
 
 const signIn = () => {
+=======
+import React, { useState } from "react";
+import { Text, StyleSheet, View, TextInput, Pressable, Dimensions, Modal} from "react-native";
+import {  Color, Border,  Padding } from "../GlobalStyles";
+import { db } from './firebaseConfig';
+import { collection, getDocs } from 'firebase/firestore';
+
+const { width } = Dimensions.get("window");
+
+const SignIn = ({navigation}) => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [modalMessage, setModalMessage] = useState("")
+  const [modalVisible, setModalVisible] = useState(false)
+
+  const handleSignup = () =>{
+    navigation.replace('Create')
+  }
+
+  const handleAdmin = () => {
+    navigation.replace('Admins')
+  }
+
+  const handleCashier = () => {
+    navigation.replace('Cashiers')
+  }
+
+  const hanldeCustomer = () => {
+    navigation.replace('Customers')
+  }
+
+  const fetchData = async() => {
+    if(!email || !password){
+      setModalMessage("Please make sure all fields not empty!")
+      setModalVisible(true)
+      return
+    }
+
+    
+    try {
+      const querySnapshot = await getDocs(collection(db, "mycart"));
+      let userExist = false
+      querySnapshot.forEach(doc =>{
+        const userData = doc.data()
+        if(userData.email === email && userData.password === password) {
+          userExist = true
+          setModalMessage("Successfully Login!")
+          setModalVisible(true)
+          setTimeout(() => {
+            if(userData.usertype === "Admin") {
+               handleAdmin()
+            } else if(userData.usertype === "Cashier") {
+              handleCashier()
+            } else {
+              hanldeCustomer()
+            }
+        },2000)
+        }
+      })
+      if (!userExist) {
+        setModalMessage("User does not exist!")
+        setModalVisible(true)
+      }
+    } catch(e) {
+      setModalMessage("Error fetching data",e)
+      setModalVisible(true)
+    }
+  }
+
+
+>>>>>>> version6.1
   return (
     <View style={styles.container}>
       <View style={styles.frame}>
         <View style={styles.signInParent}>
           <Text style={styles.signIn}>Sign In</Text>
+<<<<<<< HEAD
           <TextInput style={styles.txtemail} placeholder="Email address" multiline={false} />
         </View>
         <View style={styles.passwordWrapper}>
@@ -18,16 +91,57 @@ const signIn = () => {
       </View>
       <View style={styles.bottomSection}>
         <Pressable style={styles.submitButton} onPress={() => {}}>
+=======
+          <TextInput style={styles.txtemail} value={email} onChangeText={(email)=>{setEmail(email)}} placeholder="Email address" multiline={false} />
+        </View>
+        <View style={styles.passwordWrapper}>
+          <TextInput style={styles.password} value={password} onChangeText={(password)=>{setPassword(password)}} placeholder="Password" secureTextEntry={true} />
+        </View>
+      </View>
+      <View style={styles.bottomSection}>
+        <Pressable style={styles.submitButton} onPress={fetchData}>
+>>>>>>> version6.1
           <Text style={styles.submitText}>Submit</Text>
         </Pressable>
         <View style={styles.dontHaveAccountYetParent}>
           <Text style={styles.dontHaveAccount}>Don’t have an account yet?</Text>
+<<<<<<< HEAD
           <Text style={styles.createOne}>Create one!</Text>
         </View>
       </View>
     </View>
   );
 };
+=======
+          <Pressable style={styles.create} onPress={handleSignup}>
+            <Text style={styles.createOne}>Create one!</Text>
+          </Pressable>
+        </View>
+      </View>
+
+      <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+              setModalVisible(false);
+          }}
+     >
+      <View style={styles.modalContainer}>
+          <View style={styles.modalView}>
+              <Text style={styles.modalText}>{modalMessage}</Text>
+              <Pressable style={styles.okButton} onPress={() => setModalVisible(false)}>
+                  <Text style={styles.OK}>OK</Text>
+              </Pressable>
+          </View>
+      </View>
+    </Modal>
+
+    </View>
+  );
+};
+export default SignIn;
+>>>>>>> version6.1
 
 const styles = StyleSheet.create({
   container: {
@@ -50,7 +164,11 @@ const styles = StyleSheet.create({
   signIn: {
     fontSize: 40,
     fontWeight: "600",
+<<<<<<< HEAD
     fontFamily:"Gudea",
+=======
+    fontFamily:"sans-serif",
+>>>>>>> version6.1
     color: Color.colorBlack,
     textAlign: "left",
     marginBottom: 30,
@@ -108,6 +226,7 @@ const styles = StyleSheet.create({
     color: Color.colorBlack,
     marginBottom: 5,
   },
+<<<<<<< HEAD
   createOne: {
     fontSize: 20,
     fontFamily:"sans-serif",
@@ -116,3 +235,46 @@ const styles = StyleSheet.create({
 });
 
 export default signIn;
+=======
+  create:{
+    width: '100%',
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+  },
+  createOne: {
+    fontSize: 20,
+    fontFamily:"sans-serif",
+    color: "#189AB4",
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  okButton: {
+    backgroundColor: Color.colorBlack,
+    color: Color.colorWhite,
+    borderColor: Color.colorWhite,
+    borderRadius: 2,
+  },
+  OK:{
+    padding: 5,
+    color: Color.colorWhite,
+    fontSize: 15
+  },
+});
+>>>>>>> version6.1

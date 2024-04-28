@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+<<<<<<< HEAD
 import { Text, StyleSheet, View, TextInput, Pressable, Dimensions } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { FontFamily, Color, Border, FontSize, Padding } from "../GlobalStyles";
@@ -7,16 +8,64 @@ const { width } = Dimensions.get("window");
 
 const signUp = () => {
   const [userType, setUserType] = useState("");
+=======
+import { Text, StyleSheet, View, TextInput, Pressable, Dimensions, Modal } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+import { Color, Border, Padding } from "../GlobalStyles";
+
+import { db } from './firebaseConfig';
+import { collection, addDoc } from 'firebase/firestore';
+
+const { width } = Dimensions.get("window");
+
+const SignUp = ({navigation}) => {
+  const [userType, setUserType] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [modalMessage, setModalMessage] = useState("")
+  const [modalVisible, setModalVisible] = useState(false)
+
+  const handleSignin = () =>{
+    navigation.replace('Login')
+  }
+  
+  const createData = async () => {
+    if(!email || !password || !userType) {
+      setModalMessage("Please make sure all fields not empty!")
+      setModalVisible(true)
+      return
+    }
+    try {
+      const docRef = await addDoc(collection(db, "mycart"), {
+        email: email,
+        password: password,
+        usertype: userType
+      })
+      setModalMessage("Succesfully created!") //why this modal not open when falls here ?
+      setModalVisible(true)
+    } catch(e) {
+      setModalMessage("Error creating data!",e)
+      setModalVisible(true)
+    }
+  }
+>>>>>>> version6.1
 
   return (
     <View style={styles.container}>
       <View style={styles.frame}>
         <View style={styles.signInParent}>
           <Text style={styles.signUp}>Sign Up</Text>
+<<<<<<< HEAD
           <TextInput style={styles.txtemail} placeholder="Email address" multiline={false} />
         </View>
         <View style={styles.passwordWrapper}>
           <TextInput style={styles.password} placeholder="Password" secureTextEntry={true} />
+=======
+          <TextInput style={styles.txtemail} value={email} onChangeText={(email)=>{setEmail(email)}} placeholder="Email address" multiline={false} />
+        </View>
+        <View style={styles.passwordWrapper}>
+          <TextInput style={styles.password} value={password} onChangeText={(password)=>{setPassword(password)}} placeholder="Password" secureTextEntry={true} />
+>>>>>>> version6.1
         </View>
         <Picker
           selectedValue={userType}
@@ -30,6 +79,7 @@ const signUp = () => {
         </Picker>
       </View>
       <View style={styles.bottomSection}>
+<<<<<<< HEAD
         <Pressable style={styles.submitButton} onPress={() => {}}>
           <Text style={styles.submitText}>Submit</Text>
         </Pressable>
@@ -38,6 +88,40 @@ const signUp = () => {
   );
 };
 export default signUp;
+=======
+        <Pressable style={styles.submitButton} onPress={createData}>
+          <Text style={styles.submitText}>Submit</Text>
+        </Pressable>
+      </View>
+
+      <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+              setModalVisible(false);
+          }}
+     >
+      <View style={styles.modalContainer}>
+          <View style={styles.modalView}>
+              <Text style={styles.modalText}>{modalMessage}</Text>
+              <Pressable style={styles.okButton} onPress={() => setModalVisible(false)}>
+                  <Text style={styles.OK}>OK</Text>
+              </Pressable>
+          </View>
+      </View>
+    </Modal>
+    
+    <Pressable style={styles.goBack} onPress={handleSignin}>
+        <Text style={styles.back}>Go back to SignIn ?</Text>
+    </Pressable>
+
+    </View>
+  );
+};
+export default SignUp
+
+>>>>>>> version6.1
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -120,6 +204,50 @@ const styles = StyleSheet.create({
     fontFamily: "sans-serif",
     color: Color.colorWhite,
   },
+<<<<<<< HEAD
+=======
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  okButton: {
+    backgroundColor: Color.colorBlack,
+    color: Color.colorWhite,
+    borderColor: Color.colorWhite,
+    borderRadius: 2,
+  },
+  OK:{
+    padding: 5,
+    color: Color.colorWhite,
+    fontSize: 15
+  },
+  goBack: {
+    marginTop: 3,
+    width: '100%',
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+  },
+  back: {
+    padding: 5,
+    color: "#189AB4",
+    fontSize: 15
+  }
+>>>>>>> version6.1
 });
 
 
