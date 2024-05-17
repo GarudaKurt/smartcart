@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { Text, StyleSheet, View, TextInput, Pressable, Dimensions } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { FontFamily, Color, Border, FontSize, Padding } from "../GlobalStyles";
@@ -9,6 +10,8 @@ const { width } = Dimensions.get("window");
 const signUp = () => {
   const [userType, setUserType] = useState("");
 =======
+=======
+>>>>>>> tomerge
 import { Text, StyleSheet, View, TextInput, Pressable, Dimensions, Modal } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { Color, Border, Padding } from "../GlobalStyles";
@@ -48,7 +51,10 @@ const SignUp = ({navigation}) => {
       setModalVisible(true)
     }
   }
+<<<<<<< HEAD
 >>>>>>> version6.1
+=======
+>>>>>>> tomerge
 
   return (
     <View style={styles.container}>
@@ -56,16 +62,22 @@ const SignUp = ({navigation}) => {
         <View style={styles.signInParent}>
           <Text style={styles.signUp}>Sign Up</Text>
 <<<<<<< HEAD
+<<<<<<< HEAD
           <TextInput style={styles.txtemail} placeholder="Email address" multiline={false} />
         </View>
         <View style={styles.passwordWrapper}>
           <TextInput style={styles.password} placeholder="Password" secureTextEntry={true} />
 =======
+=======
+>>>>>>> tomerge
           <TextInput style={styles.txtemail} value={email} onChangeText={(email)=>{setEmail(email)}} placeholder="Email address" multiline={false} />
         </View>
         <View style={styles.passwordWrapper}>
           <TextInput style={styles.password} value={password} onChangeText={(password)=>{setPassword(password)}} placeholder="Password" secureTextEntry={true} />
+<<<<<<< HEAD
 >>>>>>> version6.1
+=======
+>>>>>>> tomerge
         </View>
         <Picker
           selectedValue={userType}
@@ -80,6 +92,7 @@ const SignUp = ({navigation}) => {
       </View>
       <View style={styles.bottomSection}>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <Pressable style={styles.submitButton} onPress={() => {}}>
           <Text style={styles.submitText}>Submit</Text>
         </Pressable>
@@ -89,6 +102,8 @@ const SignUp = ({navigation}) => {
 };
 export default signUp;
 =======
+=======
+>>>>>>> tomerge
         <Pressable style={styles.submitButton} onPress={createData}>
           <Text style={styles.submitText}>Submit</Text>
         </Pressable>
@@ -121,7 +136,10 @@ export default signUp;
 };
 export default SignUp
 
+<<<<<<< HEAD
 >>>>>>> version6.1
+=======
+>>>>>>> tomerge
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -205,7 +223,10 @@ const styles = StyleSheet.create({
     color: Color.colorWhite,
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> tomerge
   modalView: {
     margin: 20,
     backgroundColor: 'white',
@@ -247,7 +268,10 @@ const styles = StyleSheet.create({
     color: "#189AB4",
     fontSize: 15
   }
+<<<<<<< HEAD
 >>>>>>> version6.1
+=======
+>>>>>>> tomerge
 });
 
 

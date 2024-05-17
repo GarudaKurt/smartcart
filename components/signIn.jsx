@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React from "react";
 import { Text, StyleSheet, View, TextInput, Pressable, Dimensions } from "react-native";
 import { FontFamily, Color, Border, FontSize, Padding } from "../GlobalStyles";
@@ -7,6 +8,8 @@ const { width } = Dimensions.get("window");
 
 const signIn = () => {
 =======
+=======
+>>>>>>> tomerge
 import React, { useState } from "react";
 import { Text, StyleSheet, View, TextInput, Pressable, Dimensions, Modal} from "react-native";
 import {  Color, Border,  Padding } from "../GlobalStyles";
@@ -76,12 +79,16 @@ const SignIn = ({navigation}) => {
   }
 
 
+<<<<<<< HEAD
 >>>>>>> version6.1
+=======
+>>>>>>> tomerge
   return (
     <View style={styles.container}>
       <View style={styles.frame}>
         <View style={styles.signInParent}>
           <Text style={styles.signIn}>Sign In</Text>
+<<<<<<< HEAD
 <<<<<<< HEAD
           <TextInput style={styles.txtemail} placeholder="Email address" multiline={false} />
         </View>
@@ -92,6 +99,8 @@ const SignIn = ({navigation}) => {
       <View style={styles.bottomSection}>
         <Pressable style={styles.submitButton} onPress={() => {}}>
 =======
+=======
+>>>>>>> tomerge
           <TextInput style={styles.txtemail} value={email} onChangeText={(email)=>{setEmail(email)}} placeholder="Email address" multiline={false} />
         </View>
         <View style={styles.passwordWrapper}>
@@ -100,11 +109,15 @@ const SignIn = ({navigation}) => {
       </View>
       <View style={styles.bottomSection}>
         <Pressable style={styles.submitButton} onPress={fetchData}>
+<<<<<<< HEAD
 >>>>>>> version6.1
+=======
+>>>>>>> tomerge
           <Text style={styles.submitText}>Submit</Text>
         </Pressable>
         <View style={styles.dontHaveAccountYetParent}>
           <Text style={styles.dontHaveAccount}>Don’t have an account yet?</Text>
+<<<<<<< HEAD
 <<<<<<< HEAD
           <Text style={styles.createOne}>Create one!</Text>
         </View>
@@ -113,6 +126,8 @@ const SignIn = ({navigation}) => {
   );
 };
 =======
+=======
+>>>>>>> tomerge
           <Pressable style={styles.create} onPress={handleSignup}>
             <Text style={styles.createOne}>Create one!</Text>
           </Pressable>
@@ -141,7 +156,10 @@ const SignIn = ({navigation}) => {
   );
 };
 export default SignIn;
+<<<<<<< HEAD
 >>>>>>> version6.1
+=======
+>>>>>>> tomerge
 
 const styles = StyleSheet.create({
   container: {
@@ -165,10 +183,14 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "600",
 <<<<<<< HEAD
+<<<<<<< HEAD
     fontFamily:"Gudea",
 =======
     fontFamily:"sans-serif",
 >>>>>>> version6.1
+=======
+    fontFamily:"sans-serif",
+>>>>>>> tomerge
     color: Color.colorBlack,
     textAlign: "left",
     marginBottom: 30,
@@ -227,6 +249,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
   createOne: {
     fontSize: 20,
     fontFamily:"sans-serif",
@@ -236,6 +259,8 @@ const styles = StyleSheet.create({
 
 export default signIn;
 =======
+=======
+>>>>>>> tomerge
   create:{
     width: '100%',
     backgroundColor: 'transparent',
@@ -277,4 +302,7 @@ export default signIn;
     fontSize: 15
   },
 });
+<<<<<<< HEAD
 >>>>>>> version6.1
+=======
+>>>>>>> tomerge

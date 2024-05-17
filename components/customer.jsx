@@ -15,7 +15,7 @@ import { collection, query, where, getDocs, updateDoc, doc,addDoc } from 'fireba
 
   const EventCard = ({ event, onUpdateQuantity }) => {
     if (!event || typeof event !== 'object') {
-      return null; // Handle invalid event data gracefully
+      return null;
     }
   
     const { barcode, name, quantity, price } = event;
@@ -55,7 +55,7 @@ import { collection, query, where, getDocs, updateDoc, doc,addDoc } from 'fireba
     const [price, setPrice] = useState(0);
     const [isOrdered, setIsOrdered] = useState(false)
     const [barcodeValue, setBarcodeValue] = useState('')
-    const [events, setEvents] = useState([]); // State variable for storing events
+    const [events, setEvents] = useState([]);
 
     const logout = () =>{
       navigation.replace('Login')
@@ -130,10 +130,8 @@ import { collection, query, where, getDocs, updateDoc, doc,addDoc } from 'fireba
         console.error('Error fetching data:', error);
       };
     
-      // Attach the listener to the database reference
       onValue(databaseRef, getArduinoBcr, handleError);
     
-      // Cleanup function to remove the listener when component unmounts
       return () => {
         off(databaseRef, 'value', getArduinoBcr);
       };
@@ -152,12 +150,12 @@ import { collection, query, where, getDocs, updateDoc, doc,addDoc } from 'fireba
       setScannedData({ type, data });
       setScanned(false);
       setShowModal(true);
-      setBarcode(data); // Set barcode first
-      fetchData(); // Fetch corresponding data
+      setBarcode(data);
+      fetchData();
     };
     
     const handleAddProductPress = () => {
-      setScanned(true); // Toggle scanned status to true to display the barcode scanner
+      setScanned(true);
       setIsOrdered(false)
     };
 
@@ -176,10 +174,8 @@ import { collection, query, where, getDocs, updateDoc, doc,addDoc } from 'fireba
         price: price,
       };
       fetchData()
-      // Add the new event to the events array
       setEvents([...events, newEvent]);
 
-      // Reset the input fields and close the modal
       setBarcode('');
       setName('');
       setQuantity(0);
@@ -207,7 +203,7 @@ import { collection, query, where, getDocs, updateDoc, doc,addDoc } from 'fireba
           cartTotalprice: totalPrice(),
           cartID: barcodeValue
         });
-        console.log("[DEBUG] Item added to Firestore:", docRef.id); // Log the document ID if needed
+        console.log("[DEBUG] Item added to Firestore:", docRef.id);
         console.log("[DEBUG] QR Code ID", barcodeValue)
       } catch (e) {
         throw new Error("Error creating data: " + e.message);
@@ -229,9 +225,7 @@ import { collection, query, where, getDocs, updateDoc, doc,addDoc } from 'fireba
           price: event.price
         }));
     
-        // Call createData to store all cart items
         await createData(cartItems);
-        // Clear the events array after successful order placement
         setEvents([]);
         Alert.alert("Order placed successfully!");
         setIsOrdered(true)
@@ -242,7 +236,7 @@ import { collection, query, where, getDocs, updateDoc, doc,addDoc } from 'fireba
     const totalPrice = () => {  
       let total = 0;
       events.forEach(event => {
-        total += event.price * event.quantity; // Multiply price by quantity for each item
+        total += event.price * event.quantity;
       });
       return total;
     };
