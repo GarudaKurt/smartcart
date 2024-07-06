@@ -9,11 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "@react-native-picker/picker": "^2.7.2",
-=======
     "@react-native-picker/picker": "^2.6.1",
->>>>>>> version6.1
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/stack": "^6.3.29",
     "expo": "~50.0.14",
@@ -24,18 +20,11 @@
     "react": "18.2.0",
     "react-native": "0.73.6",
     "react-native-camera": "^4.2.1",
-<<<<<<< HEAD
-    "react-native-gesture-handler": "^2.16.0",
-    "react-native-paper": "^5.12.3",
-    "expo-barcode-scanner": "~12.9.3",
-    "expo-font": "~11.10.3"
-=======
     "react-native-gesture-handler": "^2.14.0",
     "react-native-paper": "^5.12.3",
     "react-native-qrcode-svg": "^6.3.0",
     "react-native-svg": "14.1.0",
     "react-native-vector-icons": "^10.0.3"
->>>>>>> version6.1
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

@@ -3,35 +3,6 @@ import { Text, StyleSheet, View, Pressable, Dimensions, Alert, Modal, TextInput,
 import { FontFamily, Color, Padding } from "../GlobalStyles";
 import { Card, Title, Paragraph } from "react-native-paper";
 import { BarCodeScanner } from 'expo-barcode-scanner';
-<<<<<<< HEAD
-
-const { width } = Dimensions.get("window");
-
-const EventCard = ({ event }) => (
-  <View style={[styles.cardContainer, styles.cardAd]}>
-    <Card>
-      <Card.Content>
-        <Paragraph>Barcode: {event.barcode}</Paragraph>
-        <Paragraph>Name: {event.name}</Paragraph>
-        <Paragraph>Qty: {event.quantity}</Paragraph>
-        <Paragraph>Price: {event.price}</Paragraph>
-      </Card.Content>
-    </Card>
-  </View>
-);
-
-export const Admin = () => {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
-  const [scannedData, setScannedData] = useState(null); // State to store scanned data
-  const [showModal, setShowModal] = useState(false);
-  const [barcode, setBarcode] = useState('');
-  const [name, setName] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [price, setPrice] = useState('');
-  const [events, setEvents] = useState([]); // State variable for storing events
-
-=======
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { db } from './firebaseConfig';
@@ -121,7 +92,6 @@ const Admin = ({navigation}) => {
   const logout = () =>{
     navigation.replace('Login')
   }
->>>>>>> version6.1
   useEffect(() => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -131,10 +101,6 @@ const Admin = ({navigation}) => {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScannedData({ type, data }); // Store scanned data
-<<<<<<< HEAD
-    Alert.alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-=======
->>>>>>> version6.1
     setScanned(false); // Close the camera
     setShowModal(true); // Show the modal for adding product details
   };
@@ -143,8 +109,6 @@ const Admin = ({navigation}) => {
     setScanned(true); // Toggle scanned status to true to display the barcode scanner
   };
 
-<<<<<<< HEAD
-=======
   useEffect(() => {
     if (scannedData && scannedData.data) {
       setBarcode(scannedData.data);
@@ -172,7 +136,6 @@ const Admin = ({navigation}) => {
     }
   }
 
->>>>>>> version6.1
   const handleSubmit = () => {
     // Create a new event object with the entered data
     const newEvent = {
@@ -181,20 +144,6 @@ const Admin = ({navigation}) => {
       quantity: quantity,
       price: price,
     };
-<<<<<<< HEAD
-
-    // Add the new event to the events array
-    setEvents([...events, newEvent]);
-
-    // Reset the input fields and close the modal
-    setBarcode('');
-    setName('');
-    setQuantity('');
-    setPrice('');
-    setShowModal(false);
-  };
-
-=======
     createData(); // Store to the Firestore DB
     // Add the new event to the events array
     setEvents([...events, newEvent]);
@@ -216,7 +165,6 @@ const Admin = ({navigation}) => {
     }
   };
 
->>>>>>> version6.1
   if (hasPermission === null) {
     return <Text>Requesting camera permission...</Text>;
   }
@@ -234,34 +182,20 @@ const Admin = ({navigation}) => {
       ) : (
         <View style={styles.frame}>
           <View style={styles.signInParent}>
-<<<<<<< HEAD
-            <Text style={styles.title}>Inventory</Text>
-            <Text>{scannedData ? `Type: ${scannedData.type}, Data: ${scannedData.data}` : 'Scan a barcode'}</Text>
-=======
            <Icon name="sign-out" size={20} color="black" style={{marginLeft:300}} onPress={logout} />
             <Text style={styles.title}>Inventory</Text>
->>>>>>> version6.1
             <Card style={styles.card}>
               <ScrollView contentContainerStyle={styles.scrollContainer} vertical={true}>
                 <Card.Content>
                     <Title>List of products</Title>
                     {events.map((event, index) => (
-<<<<<<< HEAD
-                    <EventCard key={index} event={event} />
-=======
                     <EventCard key={index} event={event} onUpdateQuantity={(newQuantity) => handleUpdateQuantity(index, newQuantity)} />
->>>>>>> version6.1
                     ))}
                 </Card.Content>
               </ScrollView>
             </Card>
-<<<<<<< HEAD
-
-          </View>
-=======
           </View>
           
->>>>>>> version6.1
           <Modal
             animationType="slide"
             transparent={true}
@@ -273,35 +207,13 @@ const Admin = ({navigation}) => {
                 <TextInput
                   style={styles.input}
                   placeholder="Barcode"
-<<<<<<< HEAD
-                  onChangeText={text => setBarcode(scannedData.data)}
-=======
                   value={barcode}
                   editable={false}
->>>>>>> version6.1
                 />
                 <TextInput
                   style={styles.input}
                   placeholder="Name"
                   onChangeText={text => setName(text)}
-<<<<<<< HEAD
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Quantity"
-                  onChangeText={text => setQuantity(text)}
-                />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Price"
-                  onChangeText={text => setPrice(text)}
-                />
-                <Button title="Submit" onPress={handleSubmit} />
-              </View>
-            </View>
-          </Modal>
-          
-=======
                   value={name ? name : ""}
                 />
                 <TextInput
@@ -324,7 +236,6 @@ const Admin = ({navigation}) => {
             </View>
           </Modal>
 
->>>>>>> version6.1
           <View style={styles.bottomSection}>
             <Pressable style={styles.submitButton} onPress={handleAddProductPress}>
               <Text style={styles.submitText}>Add Product</Text>
@@ -335,10 +246,7 @@ const Admin = ({navigation}) => {
     </View>
   );
 }
-<<<<<<< HEAD
-=======
 export default Admin;
->>>>>>> version6.1
 
 const styles = StyleSheet.create({
   container: {
@@ -378,11 +286,7 @@ const styles = StyleSheet.create({
     borderColor: Color.colorWhite,
     alignItems: "center",
     justifyContent: "center",
-<<<<<<< HEAD
-    paddingVertical: Padding.p_7xs,
-=======
     paddingVertical: 5,
->>>>>>> version6.1
     marginBottom: 20,
   },
   submitText: {
@@ -419,8 +323,6 @@ const styles = StyleSheet.create({
   },
   cardAd: {
     width: 200, // Set a fixed width for the cards
-<<<<<<< HEAD
-=======
   },
   qtyContainer: {
     flexDirection: 'row',
@@ -458,6 +360,5 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 3,
     borderColor: Color.colorBlack
->>>>>>> version6.1
   }
 });

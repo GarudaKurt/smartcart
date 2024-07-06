@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-import { Text, StyleSheet, View, TextInput, Pressable, Dimensions } from "react-native";
-import { FontFamily, Color, Border, FontSize, Padding } from "../GlobalStyles";
-
-const { width } = Dimensions.get("window");
-
-const signIn = () => {
-=======
 import React, { useState } from "react";
 import { Text, StyleSheet, View, TextInput, Pressable, Dimensions, Modal} from "react-native";
 import {  Color, Border,  Padding } from "../GlobalStyles";
@@ -76,22 +67,11 @@ const SignIn = ({navigation}) => {
   }
 
 
->>>>>>> version6.1
   return (
     <View style={styles.container}>
       <View style={styles.frame}>
         <View style={styles.signInParent}>
           <Text style={styles.signIn}>Sign In</Text>
-<<<<<<< HEAD
-          <TextInput style={styles.txtemail} placeholder="Email address" multiline={false} />
-        </View>
-        <View style={styles.passwordWrapper}>
-          <TextInput style={styles.password} placeholder="Password" secureTextEntry={true} />
-        </View>
-      </View>
-      <View style={styles.bottomSection}>
-        <Pressable style={styles.submitButton} onPress={() => {}}>
-=======
           <TextInput style={styles.txtemail} value={email} onChangeText={(email)=>{setEmail(email)}} placeholder="Email address" multiline={false} />
         </View>
         <View style={styles.passwordWrapper}>
@@ -100,19 +80,10 @@ const SignIn = ({navigation}) => {
       </View>
       <View style={styles.bottomSection}>
         <Pressable style={styles.submitButton} onPress={fetchData}>
->>>>>>> version6.1
           <Text style={styles.submitText}>Submit</Text>
         </Pressable>
         <View style={styles.dontHaveAccountYetParent}>
           <Text style={styles.dontHaveAccount}>Don’t have an account yet?</Text>
-<<<<<<< HEAD
-          <Text style={styles.createOne}>Create one!</Text>
-        </View>
-      </View>
-    </View>
-  );
-};
-=======
           <Pressable style={styles.create} onPress={handleSignup}>
             <Text style={styles.createOne}>Create one!</Text>
           </Pressable>
@@ -141,7 +112,6 @@ const SignIn = ({navigation}) => {
   );
 };
 export default SignIn;
->>>>>>> version6.1
 
 const styles = StyleSheet.create({
   container: {
@@ -164,11 +134,7 @@ const styles = StyleSheet.create({
   signIn: {
     fontSize: 40,
     fontWeight: "600",
-<<<<<<< HEAD
-    fontFamily:"Gudea",
-=======
     fontFamily:"sans-serif",
->>>>>>> version6.1
     color: Color.colorBlack,
     textAlign: "left",
     marginBottom: 30,
@@ -226,16 +192,6 @@ const styles = StyleSheet.create({
     color: Color.colorBlack,
     marginBottom: 5,
   },
-<<<<<<< HEAD
-  createOne: {
-    fontSize: 20,
-    fontFamily:"sans-serif",
-    color: "#2174d5",
-  },
-});
-
-export default signIn;
-=======
   create:{
     width: '100%',
     backgroundColor: 'transparent',
@@ -277,4 +233,3 @@ export default signIn;
     fontSize: 15
   },
 });
->>>>>>> version6.1
