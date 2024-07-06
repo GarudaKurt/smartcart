@@ -5,6 +5,7 @@ import { Card, Title, Paragraph } from "react-native-paper";
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import QRCode from 'react-native-qrcode-svg';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { Picker } from "@react-native-picker/picker";
 
 import { db } from './firebaseConfig';
 import { realtimeDb } from "./firebaseConfig";
@@ -14,11 +15,12 @@ import { collection, query, where, getDocs, updateDoc, doc, addDoc } from 'fireb
 const { width } = Dimensions.get("window");
 
 const EventCard = ({ event, onUpdateQuantity }) => {
-  if (!event || typeof event !== 'object') {
+  if (!event || typeof event !== "object") {
     return null; // Handle invalid event data gracefully
   }
 
   const { barcode, name, quantity, price } = event;
+  const [selectedCart, setSelectedCart] = useState("");
 
   return (
     <View style={[styles.cardContainer, styles.cardAd]}>
@@ -30,14 +32,26 @@ const EventCard = ({ event, onUpdateQuantity }) => {
             <Paragraph>Qty: {quantity}</Paragraph>
             <View style={styles.buttonContainer}>
               <Pressable style={styles.btnInc} onPress={() => onUpdateQuantity(quantity + 1)}>
-                <Text style={styles.buttonText}> + </Text>
-              </Pressable> 
+                <Text style={styles.buttonTextInc}> + </Text>
+              </Pressable>
               <Pressable style={styles.btnDec} onPress={() => onUpdateQuantity(quantity - 1)}>
-                <Text style={styles.buttonText}> - </Text>
+                <Text style={styles.buttonTextDec}> - </Text>
               </Pressable>
             </View>
           </View>
           <Paragraph>Price: {price}</Paragraph>
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={selectedCart}
+              style={styles.picker}
+              onValueChange={(itemValue) => setSelectedCart(itemValue)}
+            >
+              <Picker.Item label="Select Cart" value="" />
+              <Picker.Item label="Cart#1" value="Cart#1" />
+              <Picker.Item label="Cart#2" value="Cart#2" />
+              <Picker.Item label="Cart#3" value="Cart#3" />
+            </Picker>
+          </View>
         </Card.Content>
       </Card>
     </View>
@@ -419,28 +433,33 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginRight: 10,
     borderBottomWidth: 1, // Add a bottom border to create horizontal lines
-    borderBottomColor: '#ccc', // Color of the border
+    borderBottomColor: "#ccc", // Color of the border
   },
   cardAd: {
-    width: 200, // Set a fixed width for the cards
+    width: "100%", // Set width to 100% to make it responsive
   },
   qtyContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   buttonContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginLeft: 5, // Adjust the spacing between the Qty paragraph and the buttons as needed
   },
   buttonTextInc: {
     color: "green",
     fontSize: 20,
-    fontFamily: "sans-serif",
   },
   buttonTextDec: {
     color: "red",
     fontSize: 20,
-    fontFamily: "sans-serif",
+  },
+  pickerContainer: {
+    marginTop: 10,
+  },
+  picker: {
+    height: 50,
+    width: "100%", // Set width to 100% to make it responsive
   },
   invalidInput: {
     borderColor: 'red',

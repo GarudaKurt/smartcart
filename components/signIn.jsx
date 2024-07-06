@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 50,
     paddingHorizontal: 10,
-    marginBottom: 20,
+    marginBottom: 8,
   },
   passwordWrapper: {
     width: width - 40,
@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 10,
     paddingVertical: Padding.p_7xs,
-    marginBottom: 20,
+    marginBottom: 8,
     height: 50
   },
   bottomSection: {
