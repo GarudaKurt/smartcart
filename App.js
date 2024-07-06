@@ -2,12 +2,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import SignIn from './components/SignIn';
-import SignUp from './components/SignUp';
-import Cashier  from './components/Cashier';
-import Admin from './components/Admin';
-import Customer from './components/Customer';
-import QRCodeDisplay from './components/QRCodeDisplay';
+import SignIn from './components/signIn';
+import SignUp from './components/signUp';
+import Cashier  from './components/cashier';
+import Admin from './components/admin';
+import Customer from './components/customer';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +18,6 @@ const App = () => {
         <Stack.Screen name='Create' component={SignUp} options={{headerShown:false}}/>
         <Stack.Screen name='Admins' component={Admin} options={{headerShown:false}}/>
         <Stack.Screen name='Customers' component={Customer} options={{headerShown:false}}/>
-        {/* <Stack.Screen name='Customers' component={QRCodeDisplay} options={{headerShown:false}}/> */}
         <Stack.Screen name='Cashiers' component={Cashier} options={{headerShown:false}}/>
       </Stack.Navigator>
     </NavigationContainer>
